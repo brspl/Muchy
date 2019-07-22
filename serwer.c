@@ -101,7 +101,7 @@ void koniec()
     refresh();
     endwin();
 
-    printf("Wcisnieto CTRL-C Serwera\n");
+    printf("[SERWER]: Wcisnieto Ctrl+C\n");
     exit(0);
 }
 
@@ -263,7 +263,7 @@ int main(int argc, char *argv[])
                *(adres + i * 80 + j) = 1;
        }
 
-       for (int i = 1; i <= 21; i++) // OBSZAR DO PORUSZANIA SIE MUCH NA 0
+       for (int i = 1; i <= 20; i++) // OBSZAR DO PORUSZANIA SIE MUCH NA 0
        {
            for (int j = 1; j <= 78; j++)
                *(adres + i * 80 + j) = 0;
@@ -323,7 +323,6 @@ int main(int argc, char *argv[])
     mvprintw(18, 32, "[             ]");
     mvprintw(19, 32, "[             ]");
     mvprintw(20, 32, "[             ]");
-    mvprintw(21, 31, "(###############)");
     attroff(COLOR_PAIR(4) | A_BOLD);
 
     // ZAWARTOSC SLOIKA
@@ -331,7 +330,11 @@ int main(int argc, char *argv[])
     mvprintw(20, 33, "             ");
     attroff(COLOR_PAIR(7) | A_BOLD);
 
-    // NAPIS NA RAMCE
+    // RAMKA
+    for (int i = 1; i <= 78; i++)
+        mvprintw(21, i, "#");
+    mvprintw(21, 0, "+");
+    mvprintw(21, 79, "+");
     attron(A_BOLD);
     mvprintw(22, 24, "MUCHY WYJADAJACE DZEM ZE SLOIKA"); // WYSRODKOWANY TEKST
     attroff(A_BOLD);
