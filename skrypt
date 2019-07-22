@@ -1,0 +1,21 @@
+#!/bin/bash
+./klient 5 1 1 &
+./klient 6 40 2 &
+./klient 6 50 3 &
+./klient 4 40 4 &
+./klient 7 10 5 &
+./klient 7 20 1 &
+./klient 7 40 2 &
+./klient 7 50 3 &
+./klient 8 30 4 &
+./klient 8 70 5 &
+./klient 4 50 1 &
+./klient 4 30 2 &
+./klient 5 40 3 &
+./klient 5 40 4 &
+./klient 5 60 5 &
+./klient 5 32 1 &
+./klient 5 45 2 &
+./klient 6 12 3 &
+./klient 6 72 4 &
+./klient 4 70 5 &

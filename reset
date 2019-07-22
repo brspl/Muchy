@@ -1,0 +1,5 @@
+#!/bin/bash
+ipcrm -M 16 &
+ipcrm -S 0x4d0 &
+ipcrm -Q 0x4fc &
+ipcs
