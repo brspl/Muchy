@@ -15,7 +15,7 @@ Zasady działania systemu:
 
 ## 1. Proces serwera
 
-Tylko ten proces ma dostęp do klawiatury. Proces ten po zainstalowaniu wszystkich wspólnych mechanizmów IPC oczekuje na sygnał z klawiatury Ctrl+C, po którym usuwa z pamięci komputera wcześniej zainstalowane mechanizmy IPC i kończy pracę. Pozostałe procesy mają zablokowany sygnał Ctrl+c i Ctrl+z, a po stwierdzeniu braku połączenia również kończą pracę.
+Tylko ten proces ma dostęp do klawiatury. Proces ten po zainstalowaniu wszystkich wspólnych mechanizmów IPC oczekuje na sygnał z klawiatury Ctrl+C, po którym usuwa z pamięci komputera wcześniej zainstalowane mechanizmy IPC i kończy pracę. Pozostałe procesy mają zablokowany sygnał Ctrl+C i Ctrl+Z, a po stwierdzeniu braku połączenia również kończą pracę.
 Program zajmuje się dodatkowo wizualizacją działania aplikacji współbieżnej (czyli serwera jak też klientów). Pracuje on w trybie tekstowym. Proces ten wyświetla na ekranie znaki ASCII w miejscach określonych przez klientów. Format danych dla komunikatu tego procesu ma następującą strukturę:
 ```
 char z1, kol1, x1, y1, z2, kol2, x2, y2
@@ -37,7 +37,7 @@ Do wyliczenia czasu używamy funkcję sleep() i usleep().
 
 ## 3. Proces drugiego klienta
 
-Proces ten wykonuje specyficzną czynność po dojściu licznika dekrementującego (semafora) do zera
+Proces ten wykonuje specyficzną czynność po dojściu licznika dekrementującego (semafora) do zera. Kiedy muchy (klienci) zjedzą cały dżem ze słoika (13 pól), następuje zamknięcie słoika i zakończenie działania serwera. Muchy mogą zostać zjedzone przez pająki (wątki), które poruszają się po osi Y.
 
 System powinien być tworzony etapami:
 * Wizualizacja początkowa aplikacji (serwer).
@@ -48,24 +48,27 @@ System powinien być tworzony etapami:
 * Wykorzystanie semafora jako licznika dekrementującego (po dojściu do zera odblokowuje się pewne zadanie zablokowane operacją zero).
 * Wykorzystanie wątków - serwer tworzy i wizualizuje wątki na ekranie - wyświetlanie (dostęp do monitra) powinno być zsychronizowane z semaforem.
 
-## 4. Wymagane programy
+## 4. Wymagania
 
-Do prawidłowego działania, wymagane są programy gcc, make, ncurses
+Do prawidłowego działania, wymagane są programy: gcc, make i ncurses. Całaść testowana na Ubuntu.
 ```
 apt-get install gcc make libncurses5-dev libncursesw5-dev
 ```
 ## 5. Sposób użycia
 
 Po instalacji niezbędnego oprogramowania, należy skompilować pliki. W tym celu udajemy się do katalogu z plikami.
-Należy wpisać jedną komendę make
+Należy wpisać jedną komendę:
 ```
 make
 ```
-Plikom skrypt oraz reset należy dać prawo do uruchamiania się.
+Plikom:
+* skrypt
+* reset
+należy dać prawo do uruchamiania się.
 ```
 chmod +x skrypt reset
 ```
-Skrypt zawiela klientów, którzy pojawią się na ekranie. Reset czyści pozostałości po programie, kiedy zostanie wyłączony w niedozwolony sposób.
+Skrypt zawiela 20 klientów, którzy pojawią się na ekranie. Reset czyści pozostałości po programie, kiedy zostanie wyłączony w niedozwolony sposób.
 
 Serwer uruchamiamy poleceniem:
 ```
@@ -75,4 +78,11 @@ W osobnym terminalu należy wywołać skrypt, w celu zilustrowaniu zadania.
 ```
 ./skrypt
 ```
+## 6. Wizualizacja działania programu
 
+Zachowanie działania programu, przedstawia poniższy gif.
+![Program Muchy](https://media.giphy.com/media/m9R7vSW88ahJwGXstD/giphy.gif)
+
+## 7. TODO
+
+Można przepisać kod i wykorzystać funkcje.
