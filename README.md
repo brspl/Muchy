@@ -47,3 +47,32 @@ System powinien być tworzony etapami:
 * Utworzenie sekcji krytycznych, aby klienci nie zajmowali w tym czasie tej samej przestrzeni na ekranie.
 * Wykorzystanie semafora jako licznika dekrementującego (po dojściu do zera odblokowuje się pewne zadanie zablokowane operacją zero).
 * Wykorzystanie wątków - serwer tworzy i wizualizuje wątki na ekranie - wyświetlanie (dostęp do monitra) powinno być zsychronizowane z semaforem.
+
+## 4. Wymagane programy
+
+Do prawidłowego działania, wymagane są programy gcc, make, ncurses
+```
+apt-get install gcc make libncurses5-dev libncursesw5-dev
+```
+## 5. Sposób użycia
+
+Po instalacji niezbędnego oprogramowania, należy skompilować pliki. W tym celu udajemy się do katalogu z plikami.
+Należy wpisać jedną komendę make
+```
+make
+```
+Plikom skrypt oraz reset należy dać prawo do uruchamiania się.
+```
+chmod +x skrypt reset
+```
+Skrypt zawiela klientów, którzy pojawią się na ekranie. Reset czyści pozostałości po programie, kiedy zostanie wyłączony w niedozwolony sposób.
+
+Serwer uruchamiamy poleceniem:
+```
+./serwer
+```
+W osobnym terminalu należy wywołać skrypt, w celu zilustrowaniu zadania.
+```
+./skrypt
+```
+
