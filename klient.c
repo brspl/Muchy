@@ -66,9 +66,9 @@ int main(int argc, char *argv[])
 
     if (argc < 4) // DLA 3 ARGUMENTOW, POZYCJAY, POZYCJAX, KOLOR
     {
-        printf("Program wymaga do dzialania trzech argumentow:\n\n1) PozycjaY[1, 23] - wiersz\n2) PozycjaX[1, 78] - kolumna\n");
-        printf("3) Kolor[1, 5] - kolor\n[1 - czerwony, 2 - niebieski, 3 - zolty, 4 - bialy, 5 - cyjan]\n\n");
-        printf("Przykladowe uzycie: ./client 4 2 3\nW 4 wersie i 2 kolumnie, pojawi sie zolta mucha.\n");
+        printf("Program wymaga do dzialania trzech argumentow:\n\n1) PozycjaY [1, 23] - wiersz\n2) PozycjaX [1, 78] - kolumna\n");
+        printf("3) Kolor [1, 5] - kolor\n[czerwony - 1, niebieski - 2, zolty - 3, bialy - 4, cyjan - 5]\n\n");
+        printf("Przykladowe uzycie: ./klient 4 2 3\nW 4 wierszu i 2 kolumnie, pojawi sie zolta mucha.\n");
         exit(0);
     }
 
@@ -109,8 +109,8 @@ int main(int argc, char *argv[])
         msg.typ = 2;
         msg.znak1 = 'm';
         msg.znak2 = ' ';
-        msg.pozycjaY2 = 0;
-        msg.pozycjaX2 = 0;
+        msg.pozycjaY2 = msg.pozycjaY1;
+        msg.pozycjaX2 = msg.pozycjaX1;
         msg.kolor2 = 8;
 
         if ((msgsnd(kom, &msg, sizeof(msg), 0)) == -1) // RYSUJE MUCHE NA EKRANIE
@@ -206,6 +206,6 @@ int main(int argc, char *argv[])
 
     // JEZELI MUCHA NIE MOZE POJAWIC SIE NA MAPIE, TO CLIENT KONCZY PRACE
 
-    printf("[CLIENT]: Koniec pracy! %c\n", status);
+    printf("[KLIENT]: Koniec pracy! %c\n", status);
     exit(0);
 }
