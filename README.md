@@ -61,9 +61,10 @@ Należy wpisać jedną komendę:
 ```
 make
 ```
-Plikom:
+Pliki:
 * skrypt
 * reset
+
 należy dać prawo do uruchamiania się.
 ```
 chmod +x skrypt reset
