@@ -66,9 +66,9 @@ int main(int argc, char *argv[])
 
     if (argc < 4) // DLA 3 ARGUMENTOW, POZYCJAY, POZYCJAX, KOLOR
     {
-        printf("Program wymaga do dzialania trzech argumentow:\n\n1) PozycjaY [1, 23] - wiersz\n2) PozycjaX [1, 78] - kolumna\n");
-        printf("3) Kolor [1, 5] - kolor\n[czerwony - 1, niebieski - 2, zolty - 3, bialy - 4, cyjan - 5]\n\n");
-        printf("Przykladowe uzycie: ./klient 4 2 3\nW 4 wierszu i 2 kolumnie, pojawi sie zolta mucha.\n");
+        printf("Program do dzialania wymaga trzech argumentow:\n\n1) PozycjaY [1, 23] - wiersz\n2) PozycjaX [1, 78] - kolumna\n");
+        printf("3) Kolor [1, 5]\n[czerwony - 1, niebieski - 2, zolty - 3, bialy - 4, cyjan - 5]\n\n");
+        printf("Przykladowe uzycie: ./klient 4 2 3\nW 4 wierszu i 2 kolumnie pojawi sie zolta mucha.\n");
         exit(0);
     }
 
