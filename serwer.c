@@ -388,6 +388,6 @@ int main(int argc, char *argv[])
     refresh();
     endwin();
 
-    printf("Koniec pracy Serwera\n");
+    printf("[SERWER]: Koniec pracy!\n");
     return (0);
 }
