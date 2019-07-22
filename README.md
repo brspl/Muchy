@@ -21,3 +21,29 @@ Program zajmuje się dodatkowo wizualizacją działania aplikacji współbieżne
 char z1, kol1, x1, y1, z2, kol2, x2, y2
 ```
 Powoduje on wyświetlenie dwóch znaków: z1 w kolorze kol1 na współrzędnych x i y. W razie dowolnej błędnej operacji kończy działanie. W programie konieczne jest synchronizacja dostępu do monitora.
+
+## 2. Proces klienta
+
+Przykładowy sposób powołania procesu klienta "ppp"
+```
+ppp A 30 1 2 &
+```
+gdzie:
+* [A] - jeden znak ASCII 'A..Z' lub 'a..z' nazwa klienta
+* [30] - czas opóźnienia startu procesu [0..40] * 1 sekundę
+* [1] - skąd zaczyna się proces klienta
+* [2] - czas przemieszczania się (po kratce) [1..30] * 0,2 sekundy
+Do wyliczenia czasu używamy funkcję sleep() i usleep().
+
+## 3. Proces drugiego klienta
+
+Proces ten wykonuje specyficzną czynność po dojściu licznika dekrementującego (semafora) do zera
+
+System powinien być tworzony etapami:
+* Wizualizacja początkowa aplikacji (serwer).
+* Tworzenie i usuwanie kolejek komunikatów (serwer) i przesył danych z jednego klienta, wizualizacja klienta na serwerze.
+* Wielu klientów łączy się z serwerem i wizualizuje efekty działania.
+* Wykorzystywanie pamięci współdzielonej przez klientów do sprawdzania wolnego miejsca na ekranie.
+* Utworzenie sekcji krytycznych, aby klienci nie zajmowali w tym czasie tej samej przestrzeni na ekranie.
+* Wykorzystanie semafora jako licznika dekrementującego (po dojściu do zera odblokowuje się pewne zadanie zablokowane operacją zero).
+* Wykorzystanie wątków - serwer tworzy i wizualizuje wątki na ekranie - wyświetlanie (dostęp do monitra) powinno być zsychronizowane z semaforem.
