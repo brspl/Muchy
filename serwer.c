@@ -184,9 +184,8 @@ void *zamkniecieSloika()
            *(adres + 16 * 80 + i) = 1;
     sem_oper(id_sem, 0, 1);
     
-    pthread_cancel(watek);
-    pthread_cancel(watek);
-    pthread_cancel(watek);
+    for (int i = 0; i < 3; i++)
+        pthread_cancel(watek[i]);
 
     sem_oper(id_sem, 1, -1);
        attron(COLOR_PAIR(4) | A_BOLD);
