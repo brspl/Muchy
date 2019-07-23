@@ -22,6 +22,7 @@
 int id_sem, id_mem, kom, kon, *adres;
 struct m_komunikat msg;
 
+pthread_t watek[3], sloik;
 // --- STRUKTURY ---
 
 struct m_komunikat
@@ -182,6 +183,10 @@ void *zamkniecieSloika()
        for (int i = 32; i <= 46; i++)
            *(adres + 16 * 80 + i) = 1;
     sem_oper(id_sem, 0, 1);
+    
+    pthread_cancel(watek);
+    pthread_cancel(watek);
+    pthread_cancel(watek);
 
     sem_oper(id_sem, 1, -1);
        attron(COLOR_PAIR(4) | A_BOLD);
@@ -213,8 +218,6 @@ void *zamkniecieSloika()
 
 int main(int argc, char *argv[])
 {
-    pthread_t watek;
-
     signal(SIGINT, koniec);
 
     if ((id_sem = semget(KLUCZ_SEM, 3, PERM | IPC_CREAT)) == -1)
@@ -311,13 +314,13 @@ int main(int argc, char *argv[])
     init_pair(7, COLOR_MAGENTA, COLOR_MAGENTA);
     init_pair(8, COLOR_BLACK, COLOR_BLACK);
 
-    // RAMKA
+    // OKNO
     WINDOW *okno = newwin(24, 80, 0, 0);
     wborder(okno, '#', '#', '#', '#', '+', '+', '+', '+');
     refresh();
     wrefresh(okno);
 
-    // RYSUJE SLOIK
+    // SLOIK
     attron(COLOR_PAIR(4) | A_BOLD);
     mvprintw(17, 32, "[             ]"); // WYSRODKOWANY SLOIK
     mvprintw(18, 32, "[             ]");
@@ -343,10 +346,10 @@ int main(int argc, char *argv[])
 // --- TWORZENIE WATKOW ---
 
     srand(time(NULL));
-    pthread_create(&watek, NULL, pajak, NULL);
-    pthread_create(&watek, NULL, pajak, NULL);
-    pthread_create(&watek, NULL, pajak, NULL);
-    pthread_create(&watek, NULL, zamkniecieSloika, NULL);
+    pthread_create(&watek[0], NULL, pajak, NULL);
+    pthread_create(&watek[1], NULL, pajak, NULL);
+    pthread_create(&watek[2], NULL, pajak, NULL);
+    pthread_create(&sloik, NULL, zamkniecieSloika, NULL);
 
 // --- KONIEC RYSOWANIA PLANSZY ---
 
@@ -386,6 +389,7 @@ int main(int argc, char *argv[])
 
     sleep(15);
     msgctl(kom, IPC_RMID, 0);
+    pthread_cancel(sloik);
     curs_set(1);
     clear();
     refresh();
