@@ -4,7 +4,8 @@
 
 ## Programowanie systemowe
 
-Wykorzystując mechanizmy systemu GNU/Linux zaprojektować i uruchomić zadany przez prowadzącego zajęcia system w wersji lokalnej.
+Wykorzystując mechanizmy systemu GNU/Linux zaprojektować i uruchomić zadany przez prowadzącego zajęcia system
+w wersji lokalnej.
 
 Zasady działania systemu:
 
@@ -16,7 +17,8 @@ Zasady działania systemu:
 ## 1. Proces serwera
 
 Tylko ten proces ma dostęp do klawiatury. Proces ten po zainstalowaniu wszystkich wspólnych mechanizmów IPC oczekuje na sygnał z klawiatury Ctrl+C, po którym usuwa z pamięci komputera wcześniej zainstalowane mechanizmy IPC i kończy pracę. Pozostałe procesy mają zablokowany sygnał Ctrl+C i Ctrl+Z, a po stwierdzeniu braku połączenia również kończą pracę.
-Program zajmuje się dodatkowo wizualizacją działania aplikacji współbieżnej (czyli serwera jak też klientów). Pracuje on w trybie tekstowym. Proces ten wyświetla na ekranie znaki ASCII w miejscach określonych przez klientów. Format danych dla komunikatu tego procesu ma następującą strukturę:
+Program zajmuje się dodatkowo wizualizacją działania aplikacji współbieżnej (czyli serwera jak też klientów). Pracuje on
+w trybie tekstowym. Proces ten wyświetla na ekranie znaki ASCII w miejscach określonych przez klientów. Format danych dla komunikatu tego procesu ma następującą strukturę:
 ```
 char z1, kol1, x1, y1, z2, kol2, x2, y2
 ```
@@ -41,22 +43,22 @@ Proces ten wykonuje specyficzną czynność po dojściu licznika dekrementujące
 
 System powinien być tworzony etapami:
 * Wizualizacja początkowa aplikacji (serwer).
-* Tworzenie i usuwanie kolejek komunikatów (serwer) i przesył danych z jednego klienta, wizualizacja klienta na serwerze.
+* Tworzenie i usuwanie kolejek komunikatów (serwer) i przesłanie danych z jednego klienta, wizualizacja klienta na serwerze.
 * Wielu klientów łączy się z serwerem i wizualizuje efekty działania.
 * Wykorzystywanie pamięci współdzielonej przez klientów do sprawdzania wolnego miejsca na ekranie.
 * Utworzenie sekcji krytycznych, aby klienci nie zajmowali w tym czasie tej samej przestrzeni na ekranie.
 * Wykorzystanie semafora jako licznika dekrementującego (po dojściu do zera odblokowuje się pewne zadanie zablokowane operacją zero).
-* Wykorzystanie wątków - serwer tworzy i wizualizuje wątki na ekranie - wyświetlanie (dostęp do monitra) powinno być zsychronizowane z semaforem.
+* Wykorzystanie wątków - serwer tworzy i wizualizuje wątki na ekranie - wyświetlanie (dostęp do monitora) powinno być zsynchronizowane z semaforem.
 
 ## 4. Wymagania
 
-Do prawidłowego działania, wymagane są programy: gcc, make i ncurses. Całaść testowana na Ubuntu.
+Do prawidłowego działania, wymagane są programy: gcc, make i ncurses. Całaść testowana na Ubuntu:
 ```
 apt-get install gcc make libncurses5-dev libncursesw5-dev
 ```
 ## 5. Sposób użycia
 
-Po instalacji niezbędnego oprogramowania, należy skompilować pliki. W tym celu udajemy się do katalogu z plikami.
+Po instalacji niezbędnego oprogramowania, należy skompilować pliki. W tym celu udajemy się do katalogu.
 Należy wpisać jedną komendę:
 ```
 make
@@ -69,7 +71,8 @@ należy dać prawo do uruchamiania się.
 ```
 chmod +x skrypt reset
 ```
-Skrypt zawiela 20 klientów, którzy pojawią się na ekranie. Reset czyści pozostałości po programie, kiedy zostanie wyłączony w niedozwolony sposób.
+Skrypt zawiera 20 klientów, którzy pojawią się na ekranie. Reset czyści pozostałości po programie, kiedy zostanie wyłączony
+w niedozwolony sposób.
 
 Serwer uruchamiamy poleceniem:
 ```
