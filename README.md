@@ -85,6 +85,7 @@ W osobnym terminalu należy wywołać skrypt, w celu zilustrowaniu zadania.
 ## 6. Wizualizacja działania programu
 
 Zachowanie działania programu, przedstawia poniższy gif.
+
 ![Program Muchy](https://media.giphy.com/media/m9R7vSW88ahJwGXstD/giphy.gif)
 
 ## 7. TODO
