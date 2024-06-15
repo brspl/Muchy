@@ -18,11 +18,11 @@
 #define KLUCZ_MEM (key_t)0x10
 
 // --- ZMIENNE GLOBALNE ---
-
+	
 int id_sem, id_mem, kom, kon, *adres;
 struct m_komunikat msg;
-
 pthread_t watek[3], sloik;
+
 // --- STRUKTURY ---
 
 struct m_komunikat
@@ -106,6 +106,18 @@ void koniec()
     exit(0);
 }
 
+void debug(int czas)
+{
+	for(int i = 0; i <= 23; i++) // WYSWIETLANIE PAMIECI WSPOLDZIELONEJ
+    {
+       for(int j = 0; j <= 79; j++)
+          printf("%d", *(adres + i * 80 + j));
+       printf("\n");
+    }
+
+    sleep(czas);
+}
+
 // --- WATKI ---
 
 void *pajak()
@@ -176,11 +188,11 @@ void *zamkniecieSloika()
 {
     sem_oper(id_sem, 2, 0);
     sem_oper(id_sem, 0, -1);
-       for (int i = 33; i <= 45; i++)
+       for (int i = 34; i <= 45; i++)
            *(adres + 14 * 80 + i) = 1;
-       for (int i = 32; i <= 46; i++)
+       for (int i = 33; i <= 46; i++)
            *(adres + 15 * 80 + i) = 1;
-       for (int i = 32; i <= 46; i++)
+       for (int i = 33; i <= 46; i++)
            *(adres + 16 * 80 + i) = 1;
     sem_oper(id_sem, 0, 1);
     
@@ -189,9 +201,9 @@ void *zamkniecieSloika()
 
     sem_oper(id_sem, 1, -1);
        attron(COLOR_PAIR(4) | A_BOLD);
-       mvprintw(14, 33, "_____________"); // RYSOWANIE GORY SLOIKA
-       mvprintw(15, 32, "(_____________)");
-       mvprintw(16, 32, "/             \\");
+       mvprintw(14, 34, "____________"); // RYSOWANIE GORY SLOIKA
+       mvprintw(15, 33, "(____________)");
+       mvprintw(16, 33, "/            \\");
        attroff(COLOR_PAIR(4) | A_BOLD);
     sem_oper(id_sem, 1, 1);
 
@@ -245,16 +257,16 @@ int main(int argc, char *argv[])
 
     ustaw_sem(id_sem, 0, 1); // PAMIEC WSPOLDZIELONA
     ustaw_sem(id_sem, 1, 1); // DRUKOWANIE NA EKRANIE
-    ustaw_sem(id_sem, 2, 13); // LICZNIK DEKREMENTUJACY
+    ustaw_sem(id_sem, 2, 12); // LICZNIK DEKREMENTUJACY
 
     /*
 
     LEGENDA:
-       0 - teren wolny
-       1 - element zablokowany
-       2 - mucha
-       3 - dzem
-       4 - pajak
+       0 - TEREN WOLNY
+       1 - ELEMENT ZABLOKOWANY
+       2 - MUCHA
+       3 - DZEM
+       4 - PAJAK
 
     */
 
@@ -271,30 +283,21 @@ int main(int argc, char *argv[])
                *(adres + i * 80 + j) = 0;
        }
 
-       for (int i = 31; i <= 47; i++) // DOL SLOIKA NA 1
+       for (int i = 32; i <= 47; i++) // DOL SLOIKA NA 1
            *(adres + 21 * 80 + i) = 1;
 
        for (int i = 17; i <= 20; i++) // LEWA STRONA SLOIKA NA 1
-           *(adres + i * 80 + 32) = 1;
+           *(adres + i * 80 + 33) = 1;
 
        for (int i = 17; i <= 20; i++) // PRAWA STRONA SLOIKA NA 1
            *(adres + i * 80 + 46) = 1;
 
-       for (int i = 20; i <= 20; i++) // OBSZAR DZEMU NA 3
-       {
-           for (int j = 33; j <= 45; j++)
-               *(adres + i * 80 + j) = 3;
-       }
+       for (int i = 34; i <= 45; i++) // OBSZAR DZEMU NA 3
+           *(adres + 20 * 80 + i) = 3;
+
     sem_oper(id_sem, 0, 1);
 
-    /* for(int i = 0; i <= 23; i++) // WYSWIETLANIE PAMIECI WSPOLDZIELONEJ
-    {
-       for(int j = 0; j <= 79; j++)
-          printf("%d", *(adres + i * 80 + j));
-       printf("\n");
-    }
-
-    sleep(10); */
+	//debug(5);
 
 // --- RYSOWANIE PLANSZY ---
 
@@ -321,15 +324,15 @@ int main(int argc, char *argv[])
 
     // SLOIK
     attron(COLOR_PAIR(4) | A_BOLD);
-    mvprintw(17, 32, "[             ]"); // WYSRODKOWANY SLOIK
-    mvprintw(18, 32, "[             ]");
-    mvprintw(19, 32, "[             ]");
-    mvprintw(20, 32, "[             ]");
+    mvprintw(17, 33, "[            ]"); // WYSRODKOWANY SLOIK
+    mvprintw(18, 33, "[            ]");
+    mvprintw(19, 33, "[            ]");
+    mvprintw(20, 33, "[            ]");
     attroff(COLOR_PAIR(4) | A_BOLD);
 
     // ZAWARTOSC SLOIKA
     attron(COLOR_PAIR(7) | A_BOLD);
-    mvprintw(20, 33, "             ");
+    mvprintw(20, 34, "            ");
     attroff(COLOR_PAIR(7) | A_BOLD);
 
     // RAMKA
@@ -338,7 +341,7 @@ int main(int argc, char *argv[])
     mvprintw(21, 0, "+");
     mvprintw(21, 79, "+");
     attron(A_BOLD);
-    mvprintw(22, 24, "MUCHY WYJADAJACE DZEM ZE SLOIKA"); // WYSRODKOWANY TEKST
+    mvprintw(22, 24, "MUCHY WYJADAJACE DZEM ZE SLOIKA!"); // WYSRODKOWANY TEKST
     attroff(A_BOLD);
     refresh();
 
