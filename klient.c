@@ -62,11 +62,10 @@ int sem_oper(int id, short nr, short wart) // FUNKCJA WYKONUJE OPERACJE NA SEMAF
 
 int main(int argc, char *argv[])
 {
-    struct m_komunikat msg;
 
-    if (argc < 4) // DLA 3 ARGUMENTOW, POZYCJAY, POZYCJAX, KOLOR
+    if (argc != 4) // 4 ARGUMENTY, PONIEWAZ 1 - TO NAZWA PROGRAMU, 2 POZYCJA Y, 3 POZYCJA X i 4 KOLOR
     {
-        printf("Program do dzialania wymaga trzech argumentow:\n\n1) PozycjaY [1, 23] - wiersz\n2) PozycjaX [1, 78] - kolumna\n");
+		printf("Program do dzialania wymaga trzech argumentow:\n\n1) PozycjaY [1, 23] - wiersz\n2) PozycjaX [1, 78] - kolumna\n");
         printf("3) Kolor [1, 5]\n[czerwony - 1, niebieski - 2, zolty - 3, bialy - 4, cyjan - 5]\n\n");
         printf("Przykladowe uzycie: ./klient 4 2 3\nW 4 wierszu i 2 kolumnie pojawi sie zolta mucha.\n");
         exit(0);
@@ -98,6 +97,7 @@ int main(int argc, char *argv[])
 
 // --- WSZYSTKO JEST W PORZADKU ---
 
+	struct m_komunikat msg;
     srand(getpid());
     msg.pozycjaY1 = atoi(argv[1]); // POZYCJA Y POBIERANA Z LINII KOMEND
     msg.pozycjaX1 = atoi(argv[2]); // POZYCJA X POBIERANA Z LINII KOMEND
@@ -113,15 +113,15 @@ int main(int argc, char *argv[])
         msg.pozycjaX2 = msg.pozycjaX1;
         msg.kolor2 = 8;
 
+        sem_oper(id_sem, 0, -1);
+           *(adres + msg.pozycjaY1 * 80 + msg.pozycjaX1) = 2;
+        sem_oper(id_sem, 0, 1);
+		
         if ((msgsnd(kom, &msg, sizeof(msg), 0)) == -1) // RYSUJE MUCHE NA EKRANIE
         {
             perror("\nK.Awaria serwera ");
             exit(-1);
         }
-
-        sem_oper(id_sem, 0, -1);
-           *(adres + msg.pozycjaY1 * 80 + msg.pozycjaX1) = 2;
-        sem_oper(id_sem, 0, 1);
 
         int pozycjaPoprzedniaY, pozycjaPoprzedniaX;
         int czyWolne = 0; // 1 - WOLNE, 0 - ZAJETE
@@ -200,7 +200,7 @@ int main(int argc, char *argv[])
                 msg.pozycjaX1 = pozycjaPoprzedniaX;
             }
 
-            usleep(250000);
+            usleep(125000);
         }
     }
 
